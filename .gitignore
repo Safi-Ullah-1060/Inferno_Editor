@@ -1,0 +1,5 @@
+# ignore all exe and src files
+*.exe
+*.src
+
+main
