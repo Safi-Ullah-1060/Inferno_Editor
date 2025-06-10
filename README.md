@@ -1,4 +1,4 @@
-# Kela Editor
+# Inferno Editor
 A Vim-based Text Editor that emphasizes on modal editing
 
 ## Edit modes:
