@@ -2,4 +2,6 @@
 *.exe
 *.src
 
+.vscode
+
 main
