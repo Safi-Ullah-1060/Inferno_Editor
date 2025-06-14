@@ -30,6 +30,7 @@ public:
     bool is_greater(const MyStr &);
     MyStr *Tokenize(const char *, int &);
     MyStr *split(char, int &);
+    MyStr *split_at(int);
     bool is_delim(char, const char *);
     int *All_sub_str(const char *, int &);
     int find_first(char);
@@ -46,10 +47,11 @@ public:
     void ToLower();
     char operator[](int) const;
     char &operator[](int);
+    void regrow();
     ~MyStr();
     friend ostream &operator<<(ostream &, const MyStr &);
     friend istream &operator>>(istream &, const MyStr &);
-    char *get();
+    void get(char *, int) const;
     int get_len() const;
 };
 

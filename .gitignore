@@ -4,4 +4,6 @@
 
 .vscode
 
-main
+/Inferno_Editor
+
+!/Inferno_Editor/

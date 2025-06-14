@@ -1,4 +1,4 @@
-#include "../Headers/Cursor.h"
+#include "../include/Inferno_Editor/Cursor.h"
 
 Cursor::Cursor() : row{0}, col{0} {};
 
@@ -29,6 +29,6 @@ void Cursor::moveRight()
 
 void Cursor::moveLeft()
 {
-    if (col > 0)
+        if (col > 0)
         col--;
 }
