@@ -23,6 +23,7 @@ public:
     void regrowBuffer();
     int getCap();
     int getLen();
+    void setBuffer(MyStr *, int);
     MyStr *getLines();
     ~TextBuffer();
 };

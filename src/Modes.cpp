@@ -25,6 +25,7 @@ void Insert_Mode::handleInput(int a)
 	{
 		editor->getBuffer().insertNewLine(csr->getRow(), csr->getCol());
 		csr->setPos(csr->getRow() + 1, 0);
+		editor->isSaved = 0;
 	}
 	else if (a >= 32 and a <= 126) // PRINTABLE CHARS
 	{
@@ -35,6 +36,7 @@ void Insert_Mode::handleInput(int a)
 		editor->getBuffer().insert(csr->getRow(), csr->getCol(), a);
 		if (crCol < editor->getBuffer().buffer[crRow].get_len())
 			csr->moveRight();
+		editor->isSaved = 0;
 	}
 	else if (a == KEY_LEFT) // left arrow pressed
 		csr->moveLeft();
@@ -69,6 +71,7 @@ void Insert_Mode::handleInput(int a)
 			csr->moveLeft();
 		else if (row > 0)
 			csr->setPos(row - 1, col);
+		editor->isSaved = 0;
 	}
 }
 MyStr Insert_Mode::getName()
@@ -107,9 +110,14 @@ void Normal_Mode::handleInput(int a)
 			csr->moveLeft();
 		else if (row > 0)
 			csr->setPos(row - 1, col);
+		editor->isSaved = 0;
 	}
 	else if (a == 'q') // q Pressed
 		editor->exit();
+	else if (a == 's') // s pressed
+		editor->askToSave();
+	else if (a == 'o') // o pressed
+		editor->open();
 	else if (a == 'd') // d Pressed
 	{
 		a = getch();
@@ -122,6 +130,7 @@ void Normal_Mode::handleInput(int a)
 				csr->setPos(crRow - 1, 0);
 			else
 				csr->setPos(crRow, 0);
+			editor->isSaved = 0;
 		}
 		else
 		{
@@ -194,6 +203,7 @@ void Visual_Mode::handleInput(int a)
 			csr->setPos(std::min(startRow, endRow), std::min(startCol, endCol));
 			old_csr->setPos(csr->getRow(), csr->getCol());
 		}
+		editor->isSaved = 0;
 	}
 	else if (a == KEY_LEFT)
 	{

@@ -17,9 +17,10 @@ protected:
     bool in_visual_sel;
     Mode *md;
     bool running{0};
-    bool isSaved;
+    MyStr filename;
 
 public:
+    bool isSaved;
     Editor();
     Cursor *getCursor();
     Cursor *getSelStart();
@@ -32,6 +33,7 @@ public:
     void endVisualSel();
     bool isInVisualSel();
     void askToSave();
+    void open();
     ~Editor();
 };
 

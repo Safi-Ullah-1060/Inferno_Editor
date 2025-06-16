@@ -15,7 +15,6 @@ MyStr::MyStr(const char *c) : len{0}, cap{1}
 {
 	if (c == nullptr)
 	{
-		cap = 1;
 		Cs = new char[cap]{};
 		return;
 	}
@@ -25,6 +24,7 @@ MyStr::MyStr(const char *c) : len{0}, cap{1}
 	Cs = new char[cap]{};
 	for (int i = 0; i < len; i++)
 		Cs[i] = c[i];
+	Cs[len] = '\0';
 }
 MyStr::MyStr(int a, char c) : len{0}, cap{a * 2 + 1}
 {
@@ -342,15 +342,14 @@ void MyStr::remove_at(int i)
 }
 void MyStr::insert_at(int i, char c)
 {
-	if (i <= len)
-	{
-		if (cap - len == 0)
-			regrow();
-		for (int a = len; a >= i; a--)
-			Cs[a] = Cs[a - 1];
-		Cs[i] = c;
-		len++;
-	}
+	if (i > len || i < 0)
+		return;
+	if (cap - len == 0)
+		regrow();
+	for (int a = len; a > i; a--)
+		Cs[a] = Cs[a - 1];
+	Cs[i] = c;
+	len++;
 }
 void MyStr::insert_at(int i, const MyStr Sub)
 {

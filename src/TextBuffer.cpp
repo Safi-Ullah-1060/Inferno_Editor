@@ -13,6 +13,19 @@ TextBuffer::TextBuffer() : bfrCap{10}, bfrLen{1}, buffer{new MyStr[bfrCap]}
 		throw;
 	}
 };
+
+void TextBuffer::setBuffer(MyStr *lines, int len)
+{
+	bfrLen = 0;
+	for (int i = 0; i < len; i++)
+	{
+		if(bfrLen == bfrCap)
+			regrowBuffer();
+		buffer[i] = lines[i];
+		bfrLen++;
+	}
+}
+
 TextBuffer::TextBuffer(const TextBuffer &tb) : bfrLen{0}, bfrCap{tb.bfrCap}, buffer{new MyStr[bfrCap]}
 {
 	for (int i = 0; i < bfrCap; i++)

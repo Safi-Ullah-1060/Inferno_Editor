@@ -20,12 +20,21 @@ Renderer::Renderer()
     prevHadSel = 0;
 }
 
-void Renderer::drawFull(TextBuffer &txtbfr, Cursor &csr, const MyStr &currMode, bool has_sel, const Cursor &sel_start)
+void Renderer::drawFull(TextBuffer &txtbfr, Cursor &csr, const MyStr &currMode, bool has_sel, const Cursor &sel_start, const MyStr &filename, const bool &isSaved)
 {
     MyStr *currBfr = txtbfr.getLines();
     int lineLen = txtbfr.getLen();
 
     drawMode(currMode);
+    addch('\n');
+    for (int i = 0; i < filename.get_len(); i++)
+        addch(filename[i]);
+    if (!isSaved)
+    {
+        for (int i = 0; i < 4; i++)
+            addch(' ');
+        addch('*');
+    }
     addch('\n');
     printw("Ln %d, Col %d\n", csr.getRow() + 1, csr.getCol() + 1);
 
@@ -47,7 +56,7 @@ void Renderer::drawMode(const MyStr &currMode)
 
 void Renderer::drawLine(int lineNum, const MyStr &line, int cursorRow, int cursorCol, bool hasSel, int selStartRow, int selStartCol, int selEndRow, int selEndCol)
 {
-    move(lineNum + 2, 0);
+    move(lineNum + 3, 0);
     clrtoeol();
     printw("%4d  ", lineNum + 1);
     for (int j = 0; j <= line.get_len(); j++)
@@ -100,7 +109,7 @@ bool Renderer::isCharInSelection(int row, int col, int startRow, int startCol, i
     return true; // Middle rows have all chars selected
 }
 
-void Renderer::draw(TextBuffer &txtbfr, Cursor &csr, bool has_sel, const Cursor &sel_start, const MyStr &currMode)
+void Renderer::draw(TextBuffer &txtbfr, Cursor &csr, bool has_sel, const Cursor &sel_start, const MyStr &currMode, const MyStr &filename, const bool &isSaved)
 {
     MyStr *currBfr = txtbfr.getLines();
     int lineLen = txtbfr.getLen();
@@ -108,7 +117,7 @@ void Renderer::draw(TextBuffer &txtbfr, Cursor &csr, bool has_sel, const Cursor 
     if (justExitedVisual || prevBfrLen != lineLen || prevCsrRow == -1)
     {
         clear();
-        drawFull(txtbfr, csr, currMode, has_sel, sel_start);
+        drawFull(txtbfr, csr, currMode, has_sel, sel_start, filename, isSaved);
         prevBfrLen = lineLen;
         prevCsrRow = csr.getRow();
         prevCsrCol = csr.getCol();
@@ -116,6 +125,15 @@ void Renderer::draw(TextBuffer &txtbfr, Cursor &csr, bool has_sel, const Cursor 
         return;
     }
     drawMode(currMode);
+    addch('\n');
+    for (int i = 0; i < filename.get_len(); i++)
+        addch(filename[i]);
+    if (!isSaved)
+    {
+        for (int i = 0; i < 4; i++)
+            addch(' ');
+        addch('*');
+    }
     addch('\n');
     printw("Ln %d, Col %d\n", csr.getRow() + 1, csr.getCol() + 1);
     if (has_sel)
