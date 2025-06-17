@@ -27,14 +27,10 @@ void Renderer::drawFull(TextBuffer &txtbfr, Cursor &csr, const MyStr &currMode, 
 
     drawMode(currMode);
     addch('\n');
+    if (!isSaved)
+        addch('*');
     for (int i = 0; i < filename.get_len(); i++)
         addch(filename[i]);
-    if (!isSaved)
-    {
-        for (int i = 0; i < 4; i++)
-            addch(' ');
-        addch('*');
-    }
     addch('\n');
     printw("Ln %d, Col %d\n", csr.getRow() + 1, csr.getCol() + 1);
 
@@ -126,14 +122,10 @@ void Renderer::draw(TextBuffer &txtbfr, Cursor &csr, bool has_sel, const Cursor 
     }
     drawMode(currMode);
     addch('\n');
+    if (!isSaved)
+        addch('*');
     for (int i = 0; i < filename.get_len(); i++)
         addch(filename[i]);
-    if (!isSaved)
-    {
-        for (int i = 0; i < 4; i++)
-            addch(' ');
-        addch('*');
-    }
     addch('\n');
     printw("Ln %d, Col %d\n", csr.getRow() + 1, csr.getCol() + 1);
     if (has_sel)
@@ -173,4 +165,10 @@ void Renderer::draw(TextBuffer &txtbfr, Cursor &csr, bool has_sel, const Cursor 
 Renderer::~Renderer()
 {
     endwin();
+}
+
+void force_refresh() // I call this to refresh screen at runtime for debugging purposes
+{
+    redrawwin(stdscr); // More forceful than touchwin
+    refresh();
 }
