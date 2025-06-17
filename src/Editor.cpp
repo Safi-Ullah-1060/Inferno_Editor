@@ -147,7 +147,6 @@ void Editor::open()
 				if (i >= Data.getCap())
 					Data.regrowBuffer();
 				Data.getLines()[i].clear();
-				Data.getLines()[i - 1].insert_at(j, '\0');
 				j = 0;
 			}
 			else
@@ -165,6 +164,7 @@ void Editor::open()
 		clear();
 		printw("File not found\nWould you like to try again (Y/y) yes, (N/n) no : ");
 		refresh();
+		filename = ("Untitled.txt");
 		char c = getch();
 		bool tryAgain = 0;
 		if (c == 'Y' || c == 'y')
@@ -196,6 +196,28 @@ void Editor::endVisualSel()
 	in_visual_sel = 0;
 	sel_start.setPos(-1, -1);
 }
+// void Editor::scrollDown()
+// {
+// 	int limit = 31;
+// 	if (buffer.getLen() > csr.getRow() + 31)
+// 		csr.setPos(csr.getRow() + 31, 0);
+// 	clear();
+// 	rndr.drawFull(buffer, csr, md->getName(), 0, sel_start, filename, isSaved);
+// 	char c = getch();
+// 	md->handleInput(c);
+// }
+// void Editor::scrollUp()
+// {
+// 	int limit = 31;
+// 	if (csr.getRow() - limit > 0)
+// 		csr.setPos(csr.getRow() - limit, 0);
+// 	clear();
+// 	rndr.drawFull(buffer, csr, md->getName(), 0, sel_start, filename, isSaved);
+// 	char c = getch();
+// 	md->handleInput(c);
+// } 
+
+// these need fixing
 Editor::~Editor()
 {
 	clearCurrMode();

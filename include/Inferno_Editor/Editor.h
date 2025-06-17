@@ -34,6 +34,8 @@ public:
     bool isInVisualSel();
     void askToSave();
     void open();
+    // void scrollDown();
+    // void scrollUp();
     ~Editor();
 };
 
