@@ -162,6 +162,10 @@ void Normal_Mode::handleInput(int a)
 				csr->setPos(crRow + 1, editor->getBuffer().buffer[crRow + 1].get_len());
 		}
 	}
+// 	else if (a == KEY_PPAGE) // Page Up pressed
+// 		editor->scrollUp();
+// 	else if (a == KEY_NPAGE) // Page Down pressed
+// 		editor->scrollDown();
 }
 MyStr Normal_Mode::getName()
 {
